@@ -25,7 +25,7 @@ env:
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
   UPLOAD_BIN_DIR: false
-  UPLOAD_FIRMWARE: false
+  UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
 
@@ -116,6 +116,8 @@ jobs:
       run: |
         cd openwrt/bin/targets/*/*
         rm -rf packages
+        find * | grep -v openwrt-x86-64-generic-squashfs-combined-efi.img.gz | xargs rm
+        mv openwrt-x86-64-generic-squashfs-combined-efi.img.gz openwrt-simple-x86-64-generic-squashfs-combined-efi.img.gz
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
